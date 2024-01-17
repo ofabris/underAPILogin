@@ -5,14 +5,15 @@ using UnderAPILogin.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddScoped<IAuthService, AuthService>();
-
 builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
+
+builder.Services.AddScoped<IRegisterUserRepository, RegisterUserRepository>();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 

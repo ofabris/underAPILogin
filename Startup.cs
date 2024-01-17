@@ -18,17 +18,14 @@ namespace UnderAPILogin
         {
             Configuration = configuration;
         }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
-            // Adicione os serviços necessários ao contêiner de injeção de dependência
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRegisterUserService, RegisterUserService>();
             services.AddScoped<IRegisterUserRepository, RegisterUserRepository>();
-            // Outras configurações, middleware, etc., podem ser adicionados aqui.
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
