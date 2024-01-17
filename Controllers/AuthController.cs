@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using UnderAPILogin.Models;
 using UnderAPILogin.Services;
 
 namespace UnderAPILogin.Controllers
@@ -30,8 +31,25 @@ namespace UnderAPILogin.Controllers
 
             // Implemente a geração de tokens JWT ou outra forma de autenticação.
 
-            return Ok(new { message = "Login bem-sucedido", user });
+            return Ok(new { message = "Login bem-sucedido" });
         }
     }
+    public class RegisterUserController : ControllerBase
+    {
+        private readonly IRegisterUserService _registerUserService;
 
+        public RegisterUserController(IRegisterUserService registerUserService)
+        {
+            _registerUserService = registerUserService;
+        }
+
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] User user)
+        {
+            // Adicione validações e tratamento de erros conforme necessário.
+            _registerUserService.AddUser(user);
+
+            return Ok(new { message = "Usuário registrado com sucesso" });
+        }
+    }
 }

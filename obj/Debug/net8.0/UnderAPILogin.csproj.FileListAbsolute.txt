@@ -24,3 +24,4 @@ E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\refint\UnderAPILogin.dll
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.pdb
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.genruntimeconfig.cache
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\ref\UnderAPILogin.dll
+E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.sourcelink.json
