@@ -1,23 +1,23 @@
 using UnderAPILogin.Models;
 using UnderAPILogin.Repositories;
 using UnderAPILogin.Services;
-using UnderAPILogin.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Adicione o caminho do arquivo como uma configuração
+var configuration = builder.Configuration;
+var filePath = configuration.GetValue<string>("UserRepository:FilePath");
+
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IUserRepository>(provider => new UserRepository(filePath));
 builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
-
-builder.Services.AddScoped<IRegisterUserRepository, RegisterUserRepository>();
-
+builder.Services.AddScoped<IRegisterUserRepository>(provider => new RegisterUserRepository(filePath));
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure o pipeline HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

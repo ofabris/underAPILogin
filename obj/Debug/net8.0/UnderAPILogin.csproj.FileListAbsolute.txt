@@ -11,6 +11,7 @@ E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.AssemblyInfoIn
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.AssemblyInfo.cs
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.csproj.CoreCompileInputs.cache
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.MvcApplicationPartsAssemblyInfo.cache
+E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.sourcelink.json
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\staticwebassets.build.json
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\staticwebassets.development.json
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\staticwebassets\msbuild.UnderAPILogin.Microsoft.AspNetCore.StaticWebAssets.props
@@ -24,4 +25,3 @@ E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\refint\UnderAPILogin.dll
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.pdb
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.genruntimeconfig.cache
 E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\ref\UnderAPILogin.dll
-E:\DevProjects\Under\UnderAPILogin\obj\Debug\net8.0\UnderAPILogin.sourcelink.json

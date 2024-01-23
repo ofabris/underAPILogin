@@ -3,25 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using UnderAPILogin.Models;
 using UnderAPILogin.Services;
 
-namespace UnderAPILogin.Controllers
+[ApiController]
+[Route("")]
+public class AuthController : ControllerBase
 {
-    [ApiController]
-    [Route("")]
-    public class AuthController : ControllerBase
+    private readonly IAuthService _authService;
+    private readonly IRegisterUserService _registerUserService;
+
+    public AuthController(IAuthService authService, IRegisterUserService registerUserService)
     {
-        private readonly IAuthService _authService;
+        _authService = authService;
+        _registerUserService = registerUserService;
+    }
 
-        public AuthController(IAuthService authService)
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] LoginRequest loginRequest)
+    {
+        try
         {
-            _authService = authService;
-        }
-
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest loginRequest)
-        {
-            // Implemente a lógica para autenticação usando o serviço de autenticação.
-            // Lembre-se de lidar com erros, retornando códigos de status apropriados.
-
             var user = _authService.Authenticate(loginRequest.Email, loginRequest.Password);
 
             if (user == null)
@@ -33,23 +32,23 @@ namespace UnderAPILogin.Controllers
 
             return Ok(new { message = "Login bem-sucedido" });
         }
-    }
-    public class RegisterUserController : ControllerBase
-    {
-        private readonly IRegisterUserService _registerUserService;
-
-        public RegisterUserController(IRegisterUserService registerUserService)
+        catch (Exception ex)
         {
-            _registerUserService = registerUserService;
+            return BadRequest(new { message = $"Erro ao processar a solicitação: {ex.Message}" });
         }
+    }
 
-        [HttpPost("register")]
-        public IActionResult Register([FromBody] User user)
+    [HttpPost("register")]
+    public IActionResult Register([FromBody] User user)
+    {
+        try
         {
-            // Adicione validações e tratamento de erros conforme necessário.
             _registerUserService.AddUser(user);
-
             return Ok(new { message = "Usuário registrado com sucesso" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message});
         }
     }
 }

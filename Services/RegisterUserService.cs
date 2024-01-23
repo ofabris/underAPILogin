@@ -1,7 +1,5 @@
 ﻿using UnderAPILogin.Models;
 using UnderAPILogin.Repositories;
-using UnderAPILogin.Services;
-using UnderAPILogin.Controllers;
 
 namespace UnderAPILogin.Services
 {

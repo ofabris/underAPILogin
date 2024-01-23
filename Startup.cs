@@ -1,12 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using UnderAPILogin.Models;
-using UnderAPILogin.Repositories;
+﻿using UnderAPILogin.Repositories;
 using UnderAPILogin.Services;
-using UnderAPILogin.Controllers;
 
 namespace UnderAPILogin
 {
@@ -26,6 +19,7 @@ namespace UnderAPILogin
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRegisterUserService, RegisterUserService>();
             services.AddScoped<IRegisterUserRepository, RegisterUserRepository>();
+            services.AddScoped<IUserRepository>(provider => new UserRepository("Data/users.txt"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
