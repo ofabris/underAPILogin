@@ -1,3 +1,0 @@
-0;igor.pereira@gmail.com;senha123
-0;lucas.fabris@gmail.com;senha123
-0;henrique.klayton@gmail.com;senha123

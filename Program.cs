@@ -1,23 +1,29 @@
-using UnderAPILogin.Models;
+using Microsoft.EntityFrameworkCore;
+using UnderAPILogin.Data;
 using UnderAPILogin.Repositories;
 using UnderAPILogin.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adicione o caminho do arquivo como uma configuração
 var configuration = builder.Configuration;
-var filePath = configuration.GetValue<string>("UserRepository:FilePath");
+var connectionString = configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IUserRepository>(provider => new UserRepository(filePath));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
-builder.Services.AddScoped<IRegisterUserRepository>(provider => new RegisterUserRepository(filePath));
+builder.Services.AddScoped<IRegisterUserRepository, RegisterUserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
+builder.Services.AddScoped<IDeleteUserRepository, DeleteUserRepository>();
 
 var app = builder.Build();
 
-// Configure o pipeline HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -34,3 +40,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+ 

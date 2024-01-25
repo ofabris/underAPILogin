@@ -4,6 +4,6 @@ namespace UnderAPILogin.Repositories
 {
     public interface IUserRepository
     {
-        User GetUserByUsernameAndPassword(string username, string password);
+        User GetUserByEmailAndPassword(string Email, string Password);
     }
 }

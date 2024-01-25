@@ -12,9 +12,9 @@ namespace UnderAPILogin.Services
             _userRepository = userRepository;
         }
 
-        public User Authenticate(string username, string password)
+        public User Authenticate(string Email, string Password)
         {
-            return _userRepository.GetUserByUsernameAndPassword(username, password);
+            return _userRepository.GetUserByEmailAndPassword(Email, Password);
         }
     }
 }

@@ -1,101 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using UnderAPILogin.Data;
 using UnderAPILogin.Models;
 
 namespace UnderAPILogin.Repositories
 {
     public class RegisterUserRepository : IRegisterUserRepository
     {
+        private readonly ApplicationDbContext _dbContext;
 
-        private readonly string filePath;
-        private List<User> _users;
-
-        public RegisterUserRepository(string filePath)
+        public RegisterUserRepository(ApplicationDbContext dbContext)
         {
-            this.filePath = filePath;
-            _users = LoadUsersFromFile();
+            _dbContext = dbContext;
         }
 
         public void AddUser(User user)
         {
-
             if (ValidNull(user))
             {
                 throw new Exception($"Existem campos sem preenchimento!");
             }
 
+            if (CheckUserExists(user.Email))
+            {
+                throw new Exception($"Usuário com o e-mail '{user.Email}' já existe.");
+            }
+
             try
             {
-                CheckUserExists(user.Email);
+                // Adiciona o usuário ao contexto do banco de dados
+                _dbContext.User.Add(user);
 
-                _users.Add(user);
-
-                WriteUsersToFile();
+                // Persiste as alterações no banco de dados
+                _dbContext.SaveChanges();
 
                 Console.WriteLine($"Usuário '{user.Email}' cadastrado com sucesso.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-
+                Console.WriteLine($"Erro ao cadastrar usuário: {ex.Message}");
                 throw;
             }
+        }
+
+        public bool CheckUserExists(string email)
+        {
+            return _dbContext.User.Any(existingUser => existingUser.Email == email);
         }
 
         public bool ValidNull<T>(T obj)
         {
             return typeof(T).GetProperties().Any(a => string.IsNullOrEmpty(a.GetValue(obj)?.ToString()));
-        }
-
-        public void CheckUserExists(string email)
-        {
-            if (_users.Any(existingUser => existingUser.Email == email))
-            {
-                throw new Exception ($"Usuário com o e-mail '{email}' já existe.");
-            }
-
-            return;
-        }
-
-        private List<User> LoadUsersFromFile()
-        {
-            try
-            {
-                string[] lines = File.ReadAllLines(filePath);
-
-                return lines.Select(line =>
-                {
-                    string[] parts = line.Split(';');
-                    if (parts.Length == 3 && int.TryParse(parts[0], out int userId))
-                    {
-                        return new User { Id = userId, Email = parts[1], Password = parts[2] };
-                    }
-                    return null;
-                })
-                .Where(user => user != null)
-                .ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao ler a base: {ex.Message}");
-                return new List<User>();
-            }
-        }
-
-        private void WriteUsersToFile()
-        {
-            try
-            {
-                var lines = _users.Select(u => $"{u.Id};{u.Email};{u.Password}");
-
-                File.WriteAllLines(filePath, lines);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao escrever no arquivo: {ex.Message}");
-            }
         }
     }
 }

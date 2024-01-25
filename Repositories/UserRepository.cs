@@ -1,45 +1,31 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using UnderAPILogin.Data;
 using UnderAPILogin.Models;
 
 namespace UnderAPILogin.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly string filePath;
+        private readonly ApplicationDbContext _dbContext;
 
-        public UserRepository(string filePath)
+        public UserRepository(ApplicationDbContext dbContext)
         {
-            this.filePath = filePath;
+            _dbContext = dbContext;
         }
 
-        public User GetUserByUsernameAndPassword(string email, string password)
+        public User GetUserByEmailAndPassword(string Email, string Password)
         {
             try
             {
-                string[] lines = File.ReadAllLines(filePath);
+                var user = _dbContext.User.FirstOrDefault(u => u.Email == Email && u.Password == Password);
 
-                foreach (var line in lines)
-                {
-                    string[] parts = line.Split(';');
-                    if (parts.Length == 3 && parts[1] == email && parts[2] == password)
-                    {
-                        int userId;
-                        if (int.TryParse(parts[0], out userId))
-                        {
-                            return new User { Id = userId, Email = parts[1], Password = parts[2] };
-                        }
-                    }
-                }
-
-                return null;
+                return user;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro ao ler a base: {ex.Message}");
+                Console.WriteLine($"Erro ao consultar o banco de dados: {ex.Message}");
                 return null;
             }
         }
+
     }
 }

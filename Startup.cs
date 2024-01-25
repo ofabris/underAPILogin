@@ -1,5 +1,8 @@
-﻿using UnderAPILogin.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using UnderAPILogin.Data;
+using UnderAPILogin.Repositories;
 using UnderAPILogin.Services;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace UnderAPILogin
 {
@@ -15,11 +18,13 @@ namespace UnderAPILogin
         {
             services.AddControllers();
 
+            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 23))));
+            
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRegisterUserService, RegisterUserService>();
             services.AddScoped<IRegisterUserRepository, RegisterUserRepository>();
-            services.AddScoped<IUserRepository>(provider => new UserRepository("Data/users.txt"));
+            services.AddScoped<IDeleteUserService, DeleteUserService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -9,11 +9,13 @@ public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
     private readonly IRegisterUserService _registerUserService;
+    private readonly IDeleteUserService _deleteUserService;
 
-    public AuthController(IAuthService authService, IRegisterUserService registerUserService)
+    public AuthController(IAuthService authService, IRegisterUserService registerUserService, IDeleteUserService deleteUserService)
     {
         _authService = authService;
         _registerUserService = registerUserService;
+        _deleteUserService = deleteUserService;
     }
 
     [HttpPost("login")]
@@ -27,8 +29,6 @@ public class AuthController : ControllerBase
             {
                 return Unauthorized(new { message = "Email ou senha inválidos." });
             }
-
-            // Implemente a geração de tokens JWT ou outra forma de autenticação.
 
             return Ok(new { message = "Login bem-sucedido" });
         }
@@ -48,7 +48,22 @@ public class AuthController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(new { message = ex.Message});
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    [HttpDelete("Delete")]
+    public IActionResult Delete([FromBody] User user)
+    {
+        try
+        {
+            User userDeleted = _deleteUserService.DeleteUser(user);
+
+            return Ok(new { message = $"Usuário '{userDeleted.Email}' removido com sucesso." });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
         }
     }
 }
