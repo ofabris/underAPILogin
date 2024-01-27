@@ -26,10 +26,8 @@ namespace UnderAPILogin.Repositories
 
             try
             {
-                // Adiciona o usuário ao contexto do banco de dados
                 _dbContext.User.Add(user);
 
-                // Persiste as alterações no banco de dados
                 _dbContext.SaveChanges();
 
                 Console.WriteLine($"Usuário '{user.Email}' cadastrado com sucesso.");

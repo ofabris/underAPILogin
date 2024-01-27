@@ -10,5 +10,7 @@ namespace UnderAPILogin.Data
         }
 
         public DbSet<User> User { get; set; }
+
+        public DbSet<Music> Music { get; set; }
     }
 }

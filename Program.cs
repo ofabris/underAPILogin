@@ -21,6 +21,8 @@ builder.Services.AddScoped<IRegisterUserRepository, RegisterUserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
 builder.Services.AddScoped<IDeleteUserRepository, DeleteUserRepository>();
+builder.Services.AddScoped<IInsertMusicRepository, InsertMusicRepository>();
+builder.Services.AddScoped<IInsertMusicService, InsertMusicService>();
 
 var app = builder.Build();
 
