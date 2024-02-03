@@ -23,6 +23,7 @@ builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
 builder.Services.AddScoped<IDeleteUserRepository, DeleteUserRepository>();
 builder.Services.AddScoped<IInsertMusicRepository, InsertMusicRepository>();
 builder.Services.AddScoped<IInsertMusicService, InsertMusicService>();
+builder.Services.AddScoped<ITokenService>(provider => new TokenService("+rEEa6vGT2R3zkudeQrXXpwvFtaTSjBFBQiBbBwt9eI=", "Under"));
 
 var app = builder.Build();
 

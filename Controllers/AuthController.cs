@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using UnderAPILogin.Models;
 using UnderAPILogin.Services;
@@ -7,19 +8,22 @@ using UnderAPILogin.Services;
 [Route("")]
 public class AuthController : ControllerBase
 {
+    private readonly ITokenService _tokenService;
     private readonly IAuthService _authService;
     private readonly IRegisterUserService _registerUserService;
     private readonly IDeleteUserService _deleteUserService;
     private readonly IInsertMusicService _insertMusicService;
 
-    public AuthController(IAuthService authService, IRegisterUserService registerUserService, IDeleteUserService deleteUserService, IInsertMusicService insertMusicService)
+    public AuthController(ITokenService tokenService, IAuthService authService, IRegisterUserService registerUserService, IDeleteUserService deleteUserService, IInsertMusicService insertMusicService)
     {
+        _tokenService = tokenService;
         _authService = authService;
         _registerUserService = registerUserService;
         _deleteUserService = deleteUserService;
         _insertMusicService = insertMusicService;
     }
 
+    [Authorize]
     [HttpPost("register")]
     public IActionResult Register([FromBody] User user)
     {
@@ -40,13 +44,14 @@ public class AuthController : ControllerBase
         try
         {
             var user = _authService.Authenticate(loginRequest.Email, loginRequest.Password);
+            var token = _tokenService.GenerateToken(loginRequest.Email);
 
-            if (user == null)
+            if (user == null || token == null)
             {
                 return Unauthorized(new { message = "Email ou senha inválidos." });
             }
 
-            return Ok(new { message = "Login bem-sucedido" });
+            return Ok(new { message = "Login bem-sucedido", token = token});
         }
         catch (Exception ex)
         {
@@ -54,6 +59,7 @@ public class AuthController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpDelete("Delete")]
     public IActionResult Delete([FromBody] User user)
     {
@@ -69,6 +75,7 @@ public class AuthController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPost("InsertMusic")]
     public IActionResult InsertMusic([FromBody] Music music)
     {

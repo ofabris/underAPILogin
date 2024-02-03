@@ -11,6 +11,7 @@ E:\DevProjects\Under\UnderAPILogin\bin\Debug\net8.0\UnderAPILogin.pdb
 E:\DevProjects\Under\UnderAPILogin\bin\Debug\net8.0\Azure.Core.dll
 E:\DevProjects\Under\UnderAPILogin\bin\Debug\net8.0\Azure.Identity.dll
 E:\DevProjects\Under\UnderAPILogin\bin\Debug\net8.0\Humanizer.dll
+E:\DevProjects\Under\UnderAPILogin\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 E:\DevProjects\Under\UnderAPILogin\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 E:\DevProjects\Under\UnderAPILogin\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 E:\DevProjects\Under\UnderAPILogin\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
